@@ -1,6 +1,7 @@
 <?php
 
 namespace PhxCargo\Gnre\Models;
+
 /**
  * Class Receipt
  * @package PhxCargo\Gnre\Models

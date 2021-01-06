@@ -17,7 +17,7 @@ class GnreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $publishPath = $this->app['path.config'] . DIRECTORY_SEPARATOR . 'gnre.php';
+        $publishPath = $this->app['path.config'] . DIRECTORY_SEPARATOR . 'phxgnre.php';
         $this->publishes([
             $this->getConfigPath() => $publishPath,
         ]);
@@ -29,7 +29,7 @@ class GnreServiceProvider extends ServiceProvider
     protected function getConfigPath()
     {
         $root = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
-        $path = $root . 'config' . DIRECTORY_SEPARATOR . 'gnre.php';
+        $path = $root . 'config' . DIRECTORY_SEPARATOR . 'phxgnre.php';
         return $path;
     }
 }

@@ -15,27 +15,27 @@ class DefaultSetUp extends Setup
 {
     public function getBaseUrl()
     {
-        return config('gnre.sefaz_base_url');
+        return config('phxgnre.sefaz_base_url');
     }
 
     public function getCertificateCnpj()
     {
-        return config('gnre.sefaz_certificate_cnpj');
+        return config('phxgnre.sefaz_certificate_cnpj');
     }
 
     public function getCertificateDirectory()
     {
-        return config('gnre.sefaz_certificate_directory');
+        return config('phxgnre.sefaz_certificate_directory');
     }
 
     public function getCertificateName()
     {
-        return config('gnre.sefaz_certificate_name');
+        return config('phxgnre.sefaz_certificate_name');
     }
 
     public function getCertificatePassword()
     {
-        return config('gnre.sefaz_certificate_password');
+        return config('phxgnre.sefaz_certificate_password');
     }
 
     public function getCertificatePemFile()
@@ -46,12 +46,12 @@ class DefaultSetUp extends Setup
 
     public function getCertificationChain()
     {
-        return config('gnre.sefaz_certification_chain_file');
+        return config('phxgnre.sefaz_certification_chain_file');
     }
 
     public function getEnvironment()
     {
-        return config('gnre.sefaz_environment');
+        return config('phxgnre.sefaz_environment');
     }
 
     public function getPrivateKey()
@@ -62,27 +62,27 @@ class DefaultSetUp extends Setup
 
     public function getProxyIp()
     {
-        return config('gnre.sefaz_proxy_ip');
+        return config('phxgnre.sefaz_proxy_ip');
     }
 
     public function getProxyPass()
     {
-        return config('gnre.sefaz_proxy_pass');
+        return config('phxgnre.sefaz_proxy_pass');
     }
 
     public function getProxyPort()
     {
-        return config('gnre.sefaz_proxy_port');
+        return config('phxgnre.sefaz_proxy_port');
     }
 
     public function getProxyUser()
     {
-        return config('gnre.sefaz_proxy_user');
+        return config('phxgnre.sefaz_proxy_user');
     }
 
     public function getDebug()
     {
-        return config('gnre.sefaz_debug');
+        return config('phxgnre.sefaz_debug');
     }
 
     /**
@@ -92,12 +92,12 @@ class DefaultSetUp extends Setup
     {
         try {
             $file = new CertificatePfxFileOperation(
-                config('gnre.sefaz_certificate_name')
+                config('phxgnre.sefaz_certificate_name')
             );
         } catch (UnreachableFile $e) {
             return null;
         }
 
-        return new CertificatePfx($file, config('gnre.sefaz_certificate_password'));
+        return new CertificatePfx($file, config('phxgnre.sefaz_certificate_password'));
     }
 }

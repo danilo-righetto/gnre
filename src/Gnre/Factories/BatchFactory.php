@@ -2,6 +2,8 @@
 
 namespace PhxCargo\Gnre\Factories;
 
+use Illuminate\Support\Collection;
+use PhxCargo\Gnre\Models\Shipping;
 use Sped\Gnre\Sefaz\Lote;
 
 /**
@@ -22,26 +24,29 @@ class BatchFactory
     /**
      * BatchFactory constructor.
      * @param GuideFactory $guideFactory
+     * @param Lote $lote
      */
-    public function __construct(GuideFactory $guideFactory)
+    public function __construct(GuideFactory $guideFactory, Lote $lote)
     {
         $this->guideFactory = $guideFactory;
+
+        $lote->utilizarAmbienteDeTeste(
+            config('phxgnre.sefaz_debug', false)
+        );
+        $this->lote = $lote;
     }
 
     /**
-     * @param array $parameters
+     * @param Collection|Shipping[] $shipments
      * @return Lote
      */
-    public function create(array $parameters): Lote
+    public function create(Collection $shipments): Lote
     {
-        $lote = new Lote();
-        $lote->utilizarAmbienteDeTeste(env("APP_DEBUG", true));
+        $shipments->each(function (Shipping $shipping) {
+            $this->guideFactory->create($shipping, $this->lote);
 
-        # todo Guides must be generated for awb, not for items
-        foreach ($parameters as $airwaybill) {
-            $this->guideFactory->create($airwaybill, $lote);
-            break;
-        }
-        return $lote;
+        });
+
+        return $this->lote;
     }
 }

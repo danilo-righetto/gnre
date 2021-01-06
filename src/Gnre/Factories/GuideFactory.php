@@ -2,7 +2,8 @@
 
 namespace PhxCargo\Gnre\Factories;
 
-use PhxCargo\Gnre\Models\Parser\AirwaybillParser;
+use PhxCargo\Gnre\Models\Parser\ShippingParser;
+use PhxCargo\Gnre\Models\Shipping;
 use Sped\Gnre\Exception\UndefinedProperty;
 use Sped\Gnre\Sefaz\Guia;
 use Sped\Gnre\Sefaz\Lote;
@@ -14,40 +15,36 @@ use Sped\Gnre\Sefaz\Lote;
 class GuideFactory
 {
     /**
-     * @var AirwaybillParser
+     * @var ShippingParser
      */
-    private $airwaybillParser;
+    private $shippingParser;
 
     /**
      * GuideFactory constructor.
-     * @param AirwaybillParser $airwaybillParser
+     * @param ShippingParser $shippingParser
      */
-    public function __construct(AirwaybillParser $airwaybillParser)
+    public function __construct(ShippingParser $shippingParser)
     {
-        $this->airwaybillParser = $airwaybillParser;
+        $this->shippingParser = $shippingParser;
     }
 
     /**
-     * @param $airwaybill
+     * @param Shipping $shipping
      * @param Lote $lote
      */
-    public function create($airwaybill, Lote $lote)
+    public function create(Shipping $shipping, Lote $lote)
     {
-        foreach ($airwaybill['items'] as $item) {
-            $guide = $this->airwaybillParser->transform($item, $airwaybill);
-            $lote->addGuia($this->fillGuide($guide));
-            break;
-        }
+        $guide = $this->shippingParser->transform($shipping);
+        $lote->addGuia($this->fillGuide($guide));
     }
 
     /**
      * @param array $guide
      * @return Guia
      */
-    public function fillGuide(array $guide): Guia
+    private function fillGuide(array $guide): Guia
     {
-        $guideObject = new Guia();
-
+        $guideObject = new Guia;
         foreach ($guide as $field => $value) {
             try {
                 $guideObject->__set($field, $value);

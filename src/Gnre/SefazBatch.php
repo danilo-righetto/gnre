@@ -3,6 +3,7 @@
 namespace PhxCargo\Gnre;
 
 use DOMDocument;
+use Illuminate\Support\Collection;
 use PhxCargo\Gnre\Factories\BatchFactory;
 use PhxCargo\Gnre\Factories\Webservice\ConnectionFactory;
 use PhxCargo\Gnre\Models\Receipt;
@@ -13,7 +14,7 @@ use Sped\Gnre\Render\Pdf;
  * Class EnviarLoteSefaz
  * @package PhxCargo\Gnre
  */
-class SendSefazBatch
+class SefazBatch
 {
     /**
      * @var DefaultSetUp
@@ -45,10 +46,10 @@ class SendSefazBatch
     }
 
     /**
-     * @param array $airwaybills
+     * @param Collection $airwaybills
      * @return Receipt
      */
-    public function send(array $airwaybills): Receipt
+    public function send(Collection $airwaybills): Receipt
     {
         $lote = $this->batchFactory->create($airwaybills);
 
@@ -77,6 +78,6 @@ class SendSefazBatch
         $html = new Html();
         $html->create($lote);
         $pdf = new Pdf();
-        $pdf->create($html)->stream('gnre.pdf', ['Attachment' => 0]);
+        $pdf->create($html)->stream('phxgnre.pdf', ['Attachment' => 0]);
     }
 }
